@@ -1,0 +1,33 @@
+package books;
+
+import java.util.Collections;
+import java.util.List;
+
+public class BookApp {
+
+	/*
+	 * Prints out the number of books, sorts the books and then reverses the
+	 * order using collections and then proceeds to print out that list.
+	 */
+	public static void main(String[] args) {
+		String file = "src/books/books.csv";
+		List<Book> books = Book.getList(file);
+		// System.out.println();
+		System.out.println("Number of books read in: " + books.size());
+		System.out.println();
+		Collections.sort(books);
+		System.out.println("Sorted Book List: ");
+		for (Book b : books) {
+			System.out.println(b);
+		}
+
+		System.out.println();
+		System.out.println("Reverse order:");
+
+		Collections.reverse(books);
+
+		for (Book c : books) {
+			System.out.println(c);
+		}
+	}
+}
