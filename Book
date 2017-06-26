@@ -1,0 +1,85 @@
+package books;
+
+/*
+ * Kelby Schulz
+ * CSIS 2420
+ */
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+/*
+ * Implements comparable <T>
+ */
+public class Book implements Comparable<Book> {
+	private String title;
+	private String author;
+	private int year;
+
+	public Book(String title, String author, int year) {
+		this.title = title;
+		this.author = author;
+		this.year = year;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	@Override
+	public String toString() {
+		return title + " by " + author + "(" + year + ")";
+	}
+
+	/*
+	 * getList method reads the input from a file and if the format of the file
+	 * does not meet the specified requirements it displays a message that it
+	 * had a problem reading the file. Also separates the elements of the list
+	 * up.
+	 */
+	public static List<Book> getList(String file) {
+		List<Book> list = new ArrayList<Book>();
+
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String line;
+
+			while ((line = br.readLine()) != null) {
+				String[] bookDetails = line.split(",");
+				if (bookDetails.length != 3) {
+					System.err.println(
+							"Problem reading in " + Arrays.toString(bookDetails).replace("[", "\"").replace("]", "\""));
+					continue;
+				}
+
+				list.add(new Book(bookDetails[0], bookDetails[1], Integer.parseInt(bookDetails[2])));
+
+			}
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	/*
+	 * Required method for comparable <T>. Let's us compare objects to get a
+	 * natural order
+	 */
+	@Override
+	public int compareTo(Book obj) {
+		return title.compareTo(obj.title);
+	}
+}
